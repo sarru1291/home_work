@@ -59,7 +59,8 @@ class _CardViewState extends State<CardView> {
                 Container(
                   child: Checkbox(
                     value: selected,
-                    checkColor: Color(0xff270F36),
+                    checkColor: Colors.white,
+                    activeColor: Color(0xff270F36),
                     onChanged: (bool value) {
                       widget.card_selected_handler(widget.sub_name);
                       setState(() {
