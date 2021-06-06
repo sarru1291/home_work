@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:home_work/model/selected_card.dart';
 import 'package:home_work/utils/screen_size.dart';
 
 class CardView extends StatefulWidget {
@@ -21,44 +22,45 @@ class _CardViewState extends State<CardView> {
     ScreenSize ss = ScreenSize(context);
     return InkWell(
       onTap: () {
-        widget.card_selected_handler();
+        widget.card_selected_handler(widget.sub_name);
         setState(() {
           selected = selected ? false : true;
         });
       },
       child: Container(
-        margin: EdgeInsets.only(left: ss.sW(5)),
-        color: Colors.amber,
+        clipBehavior: Clip.values.last,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: Offset(0, 3), // changes position of shadow
+            ),
+          ],
+        ),
+        margin: EdgeInsets.all(ss.sW(5)),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(height: ss.sH(20), child: Image.network(widget.sub_image)
-
-                // CachedNetworkImage(
-                //   width: ss.sW(30),
-                //   imageUrl: sub_image,
-                //   imageBuilder: (context, imageProvider) => Container(
-                //     decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.circular(10),
-                //       image: DecorationImage(
-                //         image: imageProvider,
-                //         fit: BoxFit.fill,
-                //       ),
-                //     ),
-                //   ),
-                //   progressIndicatorBuilder: (context, url, downloadProgress) =>
-                //       Center(
-                //     child: CircularProgressIndicator(),
-                //   ),
-                //   errorWidget: (context, url, error) => Icon(Icons.error),
-                // ),
-                ),
+            Container(
+              color: Color(0xffFAF1F0),
+              height: ss.sH(20),
+              child: Image.network(
+                widget.sub_image,
+              ),
+            ),
             Row(
               children: [
                 Container(
                   child: Checkbox(
                     value: selected,
                     onChanged: (bool value) {
-                      widget.card_selected_handler();
+                      widget.card_selected_handler(widget.sub_name);
                       setState(() {
                         selected = value;
                       });
@@ -66,7 +68,7 @@ class _CardViewState extends State<CardView> {
                   ),
                 ),
                 Container(
-                  child: Text(widget.sub_name),
+                  child: Text(widget.sub_name, style: TextStyle(fontWeight: FontWeight.bold),),
                 )
               ],
             )
