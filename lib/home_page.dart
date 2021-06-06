@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
   List classData = [];
   ScreenSize ss;
   bool card_selected = false;
-  List<SelectedCard> selectedCards;
+  List<SelectedCard> selectedCards = [];
 
   @override
   void initState() {
@@ -43,13 +43,31 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  bool isContain(SelectedCard card) {
+    if (selectedCards.isEmpty) {
+      return false;
+    }
+    for (var i = 0; i < selectedCards.length; i++) {
+      if (selectedCards[i].standard == card.standard &&
+          selectedCards[i].subject == card.subject) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   void cardSelected(SelectedCard card) {
     if (mounted) {
       setState(() {
-        if (selectedCards.contains(card)) {
+        if (isContain(card)) {
           selectedCards.remove(card);
         } else {
           selectedCards.add(card);
+        }
+        if (selectedCards.length > 0) {
+          card_selected = true;
+        } else {
+          card_selected = false;
         }
       });
     }
@@ -58,6 +76,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     ss = ScreenSize(context);
+    print("length of selected cards: ${selectedCards.length}");
     return Scaffold(
       body: Stack(
         children: [
@@ -76,24 +95,34 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(top: ss.sH(90)),
-            alignment: Alignment.center,
-            child: RaisedButton(
-              child: Text(
-                "Continue",
-                style: TextStyle(fontSize: 20),
+          InkWell(
+            onTap: card_selected
+                ? () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return SubjectDetail(
+                        cards: selectedCards,
+                      );
+                    }));
+                  }
+                : null,
+            child: Align(
+              alignment: Alignment.center,
+              child: Container(
+                margin: EdgeInsets.only(top: ss.sH(89), bottom: ss.sH(2)),
+                alignment: Alignment.center,
+                width: ss.sW(80),
+                height: ss.sH(40),
+                decoration: BoxDecoration(
+                  color: !card_selected ? Colors.grey : Color(0xff270F36),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+                child: Text(
+                  "Continue",
+                  style: TextStyle(color: Colors.white, fontSize: ss.sH(2)),
+                ),
               ),
-              onPressed: card_selected
-                  ? () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) {
-                        return SubjectDetail();
-                      }));
-                    }
-                  : null,
-              color: card_selected ? Colors.blue : Colors.grey,
-              textColor: Colors.white,
-              padding: EdgeInsets.all(8.0),
             ),
           )
         ],

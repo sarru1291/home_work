@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:home_work/model/selected_card.dart';
 import 'package:home_work/utils/screen_size.dart';
 import 'package:home_work/widgets/banner_box.dart';
+import 'package:home_work/widgets/selected_card_box.dart';
 
 class SubjectDetail extends StatelessWidget {
-  SubjectDetail();
+  final List<SelectedCard> cards;
+  SubjectDetail({this.cards});
 
   @override
   Widget build(BuildContext context) {
@@ -11,26 +14,26 @@ class SubjectDetail extends StatelessWidget {
     return Scaffold(
         body: Stack(
       children: [
-        Column(
+        ListView(
           children: [
             BannerBox(),
-            Container(
-              child: Text("subject details"),
-            )
+            ...cards.map((e) => SelectedCardBox(selectedCard: e,))
           ],
         ),
-        Container(
-          margin: EdgeInsets.only(top: ss.sH(90)),
+        Align(
           alignment: Alignment.center,
-          child: RaisedButton(
-            child: Text(
-              "Thank You",
-              style: TextStyle(fontSize: 20),
+          child: Container(
+            margin: EdgeInsets.only(top: ss.sH(89),bottom: ss.sH(2)),
+            alignment: Alignment.center,
+            width: ss.sW(80),
+            height: ss.sH(40),
+            decoration: BoxDecoration( 
+              color: Color(0xff270F36),
+               borderRadius: BorderRadius.all(
+              Radius.circular(10),
             ),
-            onPressed: () {},
-            color: Colors.blue,
-            textColor: Colors.white,
-            padding: EdgeInsets.all(8.0),
+              ),
+            child: Text("Thank You",style: TextStyle(color: Colors.white,fontSize: ss.sH(2)),),
           ),
         )
       ],
