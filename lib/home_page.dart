@@ -95,23 +95,23 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          InkWell(
-            onTap: card_selected
-                ? () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      return SubjectDetail(
-                        cards: selectedCards,
-                      );
-                    }));
-                  }
-                : null,
-            child: Align(
-              alignment: Alignment.center,
+          Positioned(
+            bottom: 5.0,
+            left: 3.0,
+            right: 3.0,
+            height: ss.sH(10),
+            child: InkWell(
+              onTap: card_selected
+            ? () {
+                Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  return SubjectDetail(
+                    cards: selectedCards,
+                  );
+                }));
+              }
+            : null,
               child: Container(
-                margin: EdgeInsets.only(top: ss.sH(89), bottom: ss.sH(2)),
                 alignment: Alignment.center,
-                width: ss.sW(80),
-                height: ss.sH(40),
                 decoration: BoxDecoration(
                   color: !card_selected ? Colors.grey : Color(0xff270F36),
                   borderRadius: BorderRadius.all(
