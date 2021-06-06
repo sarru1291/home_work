@@ -21,14 +21,14 @@ class BannerBox extends StatelessWidget {
           children: [
             Text(
               "Teacher profile",
-              style: TextStyle(color: Colors.red, fontSize: ss.sH(3),fontWeight: FontWeight.bold),
+              style: TextStyle(color: Color(0xff270F36), fontSize: ss.sH(3),fontWeight: FontWeight.bold),
             ),
             Text(
               "Which grades &",
-              style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold, fontSize: ss.sH(4.5)),
+              style: TextStyle(color: Color(0xff270F36),fontWeight: FontWeight.bold, fontSize: ss.sH(4.5)),
             ),
             Text("subjects you teach",
-            style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold,fontSize: ss.sH(4.5))),
+            style: TextStyle(color: Color(0xff270F36), fontWeight: FontWeight.bold,fontSize: ss.sH(4.5))),
           ],
         ),
       )

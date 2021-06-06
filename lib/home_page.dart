@@ -18,6 +18,7 @@ class _HomePageState extends State<HomePage> {
   List classData = [];
   ScreenSize ss;
   bool card_selected = false;
+
   @override
   void initState() {
     super.initState();

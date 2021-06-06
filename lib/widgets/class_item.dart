@@ -6,7 +6,9 @@ class ClassItem extends StatelessWidget {
   final String standard;
   final List subjects;
   final Function card_selected;
-  ClassItem({this.standard, this.card_selected,this.subjects});
+
+  ClassItem({this.standard, this.card_selected, this.subjects});
+
   void cardSelectedHandler() {
     card_selected();
   }
@@ -16,9 +18,19 @@ class ClassItem extends StatelessWidget {
     ScreenSize ss = ScreenSize(context);
     return Container(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            child: Text(standard),
+            margin: EdgeInsets.only(left: ss.sW(5),top: ss.sH(3),bottom: ss.sH(3)),
+            height: ss.sH(5),
+            width: ss.sW(10),
+            padding: EdgeInsets.all(1),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5)),color: Color(0xff270F36),),
+            child: Text(
+              standard,
+              style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
+            ),
           ),
           Container(
             height: ss.sH(30),
@@ -27,10 +39,9 @@ class ClassItem extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               children: subjects
                   .map((sub) => CardView(
-                        sub_image: sub["subject_image"],
-                        sub_name: sub["subject_name"],
-                        card_selected_handler: cardSelectedHandler
-                      ))
+                      sub_image: sub["subject_image"],
+                      sub_name: sub["subject_name"],
+                      card_selected_handler: cardSelectedHandler))
                   .toList(),
             ),
           )

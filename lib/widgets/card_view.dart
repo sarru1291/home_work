@@ -6,6 +6,7 @@ class CardView extends StatefulWidget {
   final String sub_name;
   final String sub_image;
   final Function card_selected_handler;
+
   CardView({this.sub_image, this.sub_name, this.card_selected_handler});
 
   @override
@@ -14,6 +15,7 @@ class CardView extends StatefulWidget {
 
 class _CardViewState extends State<CardView> {
   bool selected = false;
+
   @override
   Widget build(BuildContext context) {
     ScreenSize ss = ScreenSize(context);
@@ -21,8 +23,8 @@ class _CardViewState extends State<CardView> {
       onTap: () {
         widget.card_selected_handler();
         setState(() {
-                        selected = selected?false:true;
-                      });
+          selected = selected ? false : true;
+        });
       },
       child: Container(
         margin: EdgeInsets.only(left: ss.sW(5)),
@@ -56,7 +58,7 @@ class _CardViewState extends State<CardView> {
                   child: Checkbox(
                     value: selected,
                     onChanged: (bool value) {
-                       widget.card_selected_handler();
+                      widget.card_selected_handler();
                       setState(() {
                         selected = value;
                       });
