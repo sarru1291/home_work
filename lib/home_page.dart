@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:home_work/subject_detail.dart';
+import 'package:home_work/utils/screen_size.dart';
 import 'package:home_work/widgets/banner_box.dart';
 import 'package:home_work/widgets/class_item.dart';
 import 'dart:convert';
@@ -14,6 +16,8 @@ class _HomePageState extends State<HomePage> {
   bool loaded = false;
   List<ClassItem> classess = [];
   List classData = [];
+  ScreenSize ss;
+  bool card_selected = false;
   @override
   void initState() {
     super.initState();
@@ -35,18 +39,54 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  void cardSelected() {
+    if (mounted) {
+      setState(() {
+        card_selected = card_selected?false: true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    ss = ScreenSize(context);
     return Scaffold(
-      body: SingleChildScrollView(
-        physics: ScrollPhysics(),
-        child: Column(
-          children: [
-            BannerBox(),
-            ...classData
-              .map((data)=>ClassItem(standard: data["standard"],subjects: data["subjects"],)).toList()
-          ],
-        ),
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            physics: ScrollPhysics(),
+            child: Column(
+              children: [
+                BannerBox(),
+                ...classData
+                    .map((data) => ClassItem(
+                          standard: data["standard"],
+                          subjects: data["subjects"],
+                          card_selected: cardSelected,
+                        ))
+                    .toList()
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: ss.sH(90)),
+            alignment: Alignment.center,
+            child: RaisedButton(
+              child: Text(
+                "Continue",
+                style: TextStyle(fontSize: 20),
+              ),
+              onPressed: card_selected? () {
+                              Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  return SubjectDetail();
+                }));
+              }:null,
+              color: card_selected?Colors.blue: Colors.grey,
+              textColor: Colors.white,
+              padding: EdgeInsets.all(8.0),
+            ),
+          )
+        ],
       ),
     );
   }

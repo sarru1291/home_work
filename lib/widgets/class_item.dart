@@ -5,24 +5,37 @@ import 'package:home_work/widgets/card_view.dart';
 class ClassItem extends StatelessWidget {
   final String standard;
   final List subjects;
- 
-   ClassItem({this.standard,this.subjects});
+  final Function card_selected;
+  ClassItem({this.standard, this.card_selected,this.subjects});
+  void cardSelectedHandler() {
+    card_selected();
+  }
 
   @override
   Widget build(BuildContext context) {
-    ScreenSize ss=ScreenSize(context);
+    ScreenSize ss = ScreenSize(context);
     return Container(
-      child: Column(children: [
-        Container(child: Text(standard),),
-
-        Container(height: ss.sH(20),child: 
-        ListView(
-  // This next line does the trick.
-  scrollDirection: Axis.horizontal,
-  children: subjects.map((sub) => CardView(sub_image: sub["subject_image"],sub_name: sub["subject_name"],)).toList(),
-)
-,)
-      ],),
+      child: Column(
+        children: [
+          Container(
+            child: Text(standard),
+          ),
+          Container(
+            height: ss.sH(30),
+            child: ListView(
+              // This next line does the trick.
+              scrollDirection: Axis.horizontal,
+              children: subjects
+                  .map((sub) => CardView(
+                        sub_image: sub["subject_image"],
+                        sub_name: sub["subject_name"],
+                        card_selected_handler: cardSelectedHandler
+                      ))
+                  .toList(),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
